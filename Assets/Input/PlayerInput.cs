@@ -64,7 +64,7 @@ public class PlayerInput : TeamController
     }
     private void GaugeRefillOnperformed(InputAction.CallbackContext obj)
     {
-        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Mental,  AttackType.Mental);
+        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Taunt,  AttackType.Mental);
         EndTurn();
     }
 #endregion

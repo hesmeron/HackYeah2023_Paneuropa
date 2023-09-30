@@ -84,6 +84,16 @@ public  abstract  class TeamController : MonoBehaviour
     {
         _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Physical);
         EndTurn();
+    }    
+    protected void PerformTaunt()
+    {
+        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Taunt, AttackType.Mental);
+        EndTurn();
+    }   
+    protected void PerformSpecial()
+    {
+        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Special, CurrentSelectedFighter.SpecialAttackType);
+        EndTurn();
     }
 
 

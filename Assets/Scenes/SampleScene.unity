@@ -304,12 +304,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4363514203083257515, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
       propertyPath: m_Name
-      value: Leszy (1)
+      value: Basilisk
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
+      propertyPath: _taunt
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
+      propertyPath: _mental
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
+      propertyPath: _special
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
+      propertyPath: _physical
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
       propertyPath: _teamController
       value: 
       objectReference: {fileID: 1662166105}
+    - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
+      propertyPath: _specialAttackType
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
 --- !u!1 &560657883
@@ -1339,6 +1359,10 @@ PrefabInstance:
     - target: {fileID: 4363514203083257515, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
       propertyPath: m_Name
       value: Leszy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
+      propertyPath: _taunt
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
       propertyPath: _mental

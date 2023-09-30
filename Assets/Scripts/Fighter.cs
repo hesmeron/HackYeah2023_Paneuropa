@@ -11,7 +11,7 @@ public class Fighter : MonoBehaviour
     [SerializeField] 
     private int _physical;    
     [SerializeField] 
-    private int _mental;
+    private int _taunt;
     [SerializeField] 
     private int _special;    
     [SerializeField] 
@@ -24,7 +24,7 @@ public class Fighter : MonoBehaviour
 
     public int Physical => _physical;
 
-    public int Mental => _mental;
+    public int Taunt => _taunt;
 
     public int Special => _special;
 
