@@ -8,7 +8,7 @@ public class EnemyAi : TeamController
     {
         int targetIndex = Random.Range(0, _turnManager.PassiveTeam.FighterCount());
         _turnManager.PassiveTeam.Select(targetIndex);
-        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(25);
+        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(25, AttackType.Physical);
         _turnManager.EndTurn();
     }
 

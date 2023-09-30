@@ -1,8 +1,11 @@
- using System;
- using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+public enum AttackType{
+    Physical,
+    Mental,
+    Entangelment,
+    Petrification,
+}
 public class Fighter : MonoBehaviour
 {
     [SerializeField] 
@@ -25,7 +28,7 @@ public class Fighter : MonoBehaviour
         transform.localScale = new Vector3(HealthPercentage(),1f,1);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, AttackType attackType = AttackType.Physical)
     {
         _currentHealth -= damage;
         if (_currentHealth <= 0)
