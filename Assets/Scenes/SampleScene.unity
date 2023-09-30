@@ -404,6 +404,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1620349102}
     m_Modifications:
     - target: {fileID: 1990566362289752214, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
+      propertyPath: _physical
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990566362289752214, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
       propertyPath: _maxHealth
       value: 200
       objectReference: {fileID: 0}
@@ -1039,6 +1043,8 @@ MonoBehaviour:
   _fighters:
   - {fileID: 4312589394773379093}
   - {fileID: 879463959}
+  _attackChoice: {fileID: 1557845314}
+  _camera: {fileID: 519420031}
 --- !u!1 &1919403712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,7 +1101,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2081038435}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.061232, y: -0.7058358, z: 0.005136218}
+  m_LocalPosition: {x: -4.061232, y: 0.5, z: 0.005136218}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1210,6 +1216,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1620349102}
     m_Modifications:
+    - target: {fileID: 1990566362289752214, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
+      propertyPath: _physical
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 1990566362289752214, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
       propertyPath: _teamController
       value: 
@@ -1331,9 +1341,25 @@ PrefabInstance:
       value: Leszy
       objectReference: {fileID: 0}
     - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
+      propertyPath: _mental
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
+      propertyPath: _special
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
+      propertyPath: _physical
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
       propertyPath: _teamController
       value: 
       objectReference: {fileID: 1662166105}
+    - target: {fileID: 4650921570176463627, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
+      propertyPath: _specialAttackType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd44f2e7ec6728f4db171e7a801bc127, type: 3}
 --- !u!114 &4312589394773379093 stripped

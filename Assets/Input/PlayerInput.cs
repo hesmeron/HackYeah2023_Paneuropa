@@ -36,13 +36,13 @@ public class PlayerInput : TeamController
         Debug.Log("Player lost");
     }
 
-    public void EndTurn()
+    public override void EndTurn()
     {
         _playerControls.Controller.StandardAttack.performed -= StandardAttackOnperformed;
         _playerControls.Controller.NextSelection.performed -= NextSelectionOnperformed;
         _playerControls.Controller.PreviousSelection.performed -= PreviousSelectionOnperformed;
         _attackChoice.gameObject.SetActive(false);
-        _turnManager.EndTurn();
+        base.EndTurn();
     }
     #region Callbacks
     
@@ -60,13 +60,11 @@ public class PlayerInput : TeamController
 
     private void StandardAttackOnperformed(InputAction.CallbackContext obj)
     {
-        
-        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(50);
-        EndTurn();
+        PerformPhysicalAttack();
     }
     private void GaugeRefillOnperformed(InputAction.CallbackContext obj)
     {
-        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(10, AttackType.Mental);
+        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Mental,  AttackType.Mental);
         EndTurn();
     }
 #endregion

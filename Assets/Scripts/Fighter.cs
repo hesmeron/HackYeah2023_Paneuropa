@@ -9,10 +9,26 @@ public enum AttackType{
 public class Fighter : MonoBehaviour
 {
     [SerializeField] 
+    private int _physical;    
+    [SerializeField] 
+    private int _mental;
+    [SerializeField] 
+    private int _special;    
+    [SerializeField] 
+    private AttackType _specialAttackType;
+    [SerializeField] 
     private TeamController _teamController;
     [SerializeField]
     private int _maxHealth = 100;
     private int _currentHealth;
+
+    public int Physical => _physical;
+
+    public int Mental => _mental;
+
+    public int Special => _special;
+
+    public AttackType SpecialAttackType => _specialAttackType;
 
     private void Awake()
     {
@@ -30,6 +46,7 @@ public class Fighter : MonoBehaviour
 
     public void TakeDamage(int damage, AttackType attackType = AttackType.Physical)
     {
+        Debug.Log("Receive damage" + damage);
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {

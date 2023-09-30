@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +15,11 @@ public  abstract  class TeamController : MonoBehaviour
     public Fighter CurrentSelectedFighter => _currentSelectedFighter;
 
     public abstract void ExecuteTurn();
+
+    public virtual void EndTurn()
+    {
+        _turnManager.EndTurn();
+    }
     
     public int FighterCount()
     {
@@ -75,6 +78,12 @@ public  abstract  class TeamController : MonoBehaviour
             _currentSelectedFighter = _fighters[index];
             _currentSelectedFighter.Select();
         }
+    }
+
+    protected void PerformPhysicalAttack()
+    {
+        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Physical);
+        EndTurn();
     }
 
 
