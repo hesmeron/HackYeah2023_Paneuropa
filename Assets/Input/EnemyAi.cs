@@ -6,14 +6,24 @@ public class EnemyAi : TeamController
 {
     public override void ExecuteTurn()
     {
-        int targetIndex = Random.Range(0, _turnManager.PassiveTeam.FighterCount());
-        _turnManager.PassiveTeam.Select(targetIndex);
-        PerformPhysicalAttack();
+        SelectAndAttack();
     }
-    
+
+    public override void OneMore()
+    {
+        SelectAndAttack();
+    }
+
 
     protected override void OnRunOutOfFighters()
     {
-        _turnManager.Lose();
+        _turnManager.Win();
+    }
+
+    private void SelectAndAttack()
+    {
+        int targetIndex = Random.Range(0, _turnManager.PassiveTeam.FighterCount());
+        _turnManager.PassiveTeam.Select(targetIndex);
+        PerformPhysicalAttack();
     }
 }

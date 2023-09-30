@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,16 +12,37 @@ public  abstract  class TeamController : MonoBehaviour
 
     private int currentSelectedFighterIndex =  0;
     private Fighter _currentSelectedFighter;
+    private int _kncokedOutCount = 0;
 
     public Fighter CurrentSelectedFighter => _currentSelectedFighter;
 
     public abstract void ExecuteTurn();
 
+    public void EvaluateTurn(DefenseType defenseType)
+    {
+        switch (defenseType)
+        {
+            case DefenseType.Weak:
+               OneMore();
+                break;
+            case DefenseType.Normal:
+                EndTurn();
+                break;
+            case DefenseType.Resist:
+                _turnManager.Skip();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(defenseType), defenseType, null);
+        }
+    }
+
     public virtual void EndTurn()
     {
         _turnManager.EndTurn();
     }
-    
+
+    public abstract void OneMore();
+
     public int FighterCount()
     {
         return _fighters.Count;
@@ -79,21 +101,36 @@ public  abstract  class TeamController : MonoBehaviour
             _currentSelectedFighter.Select();
         }
     }
+    public void SelectAndReady(int index)
+    {
+        Select(index);
+        CurrentSelectedFighter.Cleanse();
+    }
+
+    public void AddKnockout()
+    {
+        _kncokedOutCount++;
+    }
+    
+    public void RemoveKnockout()
+    {
+        _kncokedOutCount--;
+    }
 
     protected void PerformPhysicalAttack()
     {
-        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Physical);
-        EndTurn();
+        DefenseType defenseType = _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Physical);
+        EvaluateTurn(defenseType);
     }    
     protected void PerformTaunt()
     {
-        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Taunt, AttackType.Mental);
-        EndTurn();
+        DefenseType defenseType =_turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Taunt, AttackType.Mental);
+        EvaluateTurn(defenseType);
     }   
     protected void PerformSpecial()
     {
-        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Special, CurrentSelectedFighter.SpecialAttackType);
-        EndTurn();
+        DefenseType defenseType =_turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Special, CurrentSelectedFighter.SpecialAttackType);
+        EvaluateTurn(defenseType);
     }
 
 

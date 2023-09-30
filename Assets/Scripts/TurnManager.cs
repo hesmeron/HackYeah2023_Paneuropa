@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -42,7 +41,7 @@ public class TurnManager : MonoBehaviour
     void StartTurn()
     {
         SetTurnTeams();
-        activeTeam.Select(currentFighterIndex);
+        activeTeam.SelectAndReady(currentFighterIndex);
         passiveTeam.Select(currentTargetrIndex);
         if (isPlayersTurn)
         {
@@ -52,6 +51,13 @@ public class TurnManager : MonoBehaviour
         {
             _enemyTeamController.ExecuteTurn();
         }
+    }
+    
+    [Button]
+    public void Skip()
+    {
+        currentFighterIndex = 100;
+        activeTeam.EndTurn();
     }
 
     [Button]

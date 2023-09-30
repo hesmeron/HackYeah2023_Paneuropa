@@ -45,6 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185921ece8d304240b811608e22bd7b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textSpawner: {fileID: 0}
+  _physical: 0
+  _taunt: 0
+  _special: 0
+  _specialAttackType: 0
+  _defenseTypes: 02000000000000000100000001000000
+  _teamController: {fileID: 0}
+  _maxHealth: 100
 --- !u!1 &2702562195373717793
 GameObject:
   m_ObjectHideFlags: 0

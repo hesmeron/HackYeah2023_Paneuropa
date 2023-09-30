@@ -3,11 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerInput : TeamController
 {
-
     [SerializeField]
-    private RectTransform _attackChoice;
+    private RectTransform _attackChoice;  
+    [SerializeField]
+    private RectTransform _selectChoice;
     [SerializeField] 
     private Camera _camera;
+
+    private bool _isChoosingSelf = false;
     
     private PlayerControls _playerControls;
 
@@ -32,9 +35,9 @@ public class PlayerInput : TeamController
 
     protected override void OnRunOutOfFighters()
     {
-        _turnManager.Win();
+        _turnManager.Lose();
     }
-
+    
     public override void EndTurn()
     {
         _playerControls.Controller.StandardAttack.performed -= StandardAttackOnperformed;
@@ -43,8 +46,15 @@ public class PlayerInput : TeamController
         _attackChoice.gameObject.SetActive(false);
         base.EndTurn();
     }
-    
-#region Callbacks
+
+    public override void OneMore()
+    {
+        _isChoosingSelf = true;
+        _attackChoice.gameObject.SetActive(false);
+        _selectChoice.gameObject.SetActive(true);
+    }
+
+    #region Callbacks
     
     private void SpecialAttackOnperformed(InputAction.CallbackContext obj)
     {
@@ -52,19 +62,44 @@ public class PlayerInput : TeamController
     }
     private void PreviousSelectionOnperformed(InputAction.CallbackContext obj)
     {
-        _turnManager.PassiveTeam.PreviousSelection();
+        if (_isChoosingSelf)
+        {
+            PreviousSelection();
+        }
+        else
+        {
+            _turnManager.PassiveTeam.PreviousSelection();
+        }
         MoveUI();
     }
 
     private void NextSelectionOnperformed(InputAction.CallbackContext obj)
     {
-        _turnManager.PassiveTeam.NextSelection();
+        if (_isChoosingSelf)
+        {
+            NextSelection();
+        }
+        else
+        {
+            _turnManager.PassiveTeam.NextSelection();
+        }
         MoveUI();
     }
 
     private void StandardAttackOnperformed(InputAction.CallbackContext obj)
     {
-        PerformPhysicalAttack();
+        if (_isChoosingSelf)
+        {
+            _isChoosingSelf = false;
+            _attackChoice.gameObject.SetActive(true);
+            _selectChoice.gameObject.SetActive(false);
+            MoveUI();
+        }
+        else
+        {
+            PerformPhysicalAttack();
+        }
+
     }
     private void GaugeRefillOnperformed(InputAction.CallbackContext obj)
     {
@@ -74,7 +109,15 @@ public class PlayerInput : TeamController
 
     private void MoveUI()
     {
-        Vector3 fighterPosition = _turnManager.PassiveTeam.CurrentSelectedFighter.transform.position;
-        _attackChoice.position = _camera.WorldToScreenPoint(fighterPosition);
+        if (_isChoosingSelf)
+        {
+            Vector3 fighterPosition = CurrentSelectedFighter.transform.position;
+            _selectChoice.position = _camera.WorldToScreenPoint(fighterPosition);
+        }
+        else
+        {
+            Vector3 fighterPosition = _turnManager.PassiveTeam.CurrentSelectedFighter.transform.position;
+            _attackChoice.position = _camera.WorldToScreenPoint(fighterPosition);
+        }
     }
 }
