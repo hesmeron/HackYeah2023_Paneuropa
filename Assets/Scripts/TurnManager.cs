@@ -5,6 +5,10 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
     [SerializeField] 
+    private GameObject _vicotryPanel;
+    [SerializeField] 
+    private GameObject _defeatPanel;
+    [SerializeField] 
     private PlayerInput _playerInput;
     [SerializeField]
     private TeamController _enemyTeamController;
@@ -68,5 +72,14 @@ public class TurnManager : MonoBehaviour
     {
         activeTeam = isPlayersTurn ? _playerInput : _enemyTeamController;
         passiveTeam = isPlayersTurn ? _enemyTeamController : _playerInput;
+    }
+
+    public void Win()
+    {
+        _vicotryPanel.SetActive(true);
+    }    
+    public void Lose()
+    {
+        _defeatPanel.SetActive(true);
     }
 }

@@ -9,6 +9,8 @@ public enum AttackType{
 public class Fighter : MonoBehaviour
 {
     [SerializeField] 
+    private TextSpawner _textSpawner;
+    [SerializeField]
     private int _physical;    
     [SerializeField] 
     private int _taunt;
@@ -46,7 +48,8 @@ public class Fighter : MonoBehaviour
 
     public void TakeDamage(int damage, AttackType attackType = AttackType.Physical)
     {
-        Debug.Log("Receive damage" + damage);
+        Debug.Log("Receive damage" + damage+ " " + attackType);
+        _textSpawner.ShowText(damage.ToString(), transform.position);
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {

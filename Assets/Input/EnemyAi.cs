@@ -14,6 +14,6 @@ public class EnemyAi : TeamController
 
     protected override void OnRunOutOfFighters()
     {
-        Debug.Log("Enemy lost");
+        _turnManager.Lose();
     }
 }

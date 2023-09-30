@@ -1,5 +1,3 @@
-using System;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,13 +25,14 @@ public class PlayerInput : TeamController
         _playerControls.Controller.NextSelection.performed += NextSelectionOnperformed;
         _playerControls.Controller.PreviousSelection.performed += PreviousSelectionOnperformed;
         _playerControls.Controller.GaugeRefill.performed += GaugeRefillOnperformed;
+        _playerControls.Controller.SpecialAttack.performed += SpecialAttackOnperformed;
         _attackChoice.gameObject.SetActive(true);
         MoveUI();
     }
 
     protected override void OnRunOutOfFighters()
     {
-        Debug.Log("Player lost");
+        _turnManager.Win();
     }
 
     public override void EndTurn()
@@ -44,8 +43,13 @@ public class PlayerInput : TeamController
         _attackChoice.gameObject.SetActive(false);
         base.EndTurn();
     }
-    #region Callbacks
     
+#region Callbacks
+    
+    private void SpecialAttackOnperformed(InputAction.CallbackContext obj)
+    {
+        PerformSpecial();
+    }
     private void PreviousSelectionOnperformed(InputAction.CallbackContext obj)
     {
         _turnManager.PassiveTeam.PreviousSelection();
@@ -64,8 +68,7 @@ public class PlayerInput : TeamController
     }
     private void GaugeRefillOnperformed(InputAction.CallbackContext obj)
     {
-        _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Taunt,  AttackType.Mental);
-        EndTurn();
+        PerformTaunt();
     }
 #endregion
 
