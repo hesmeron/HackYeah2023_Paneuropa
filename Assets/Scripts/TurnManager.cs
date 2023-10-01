@@ -1,4 +1,3 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class TurnManager : MonoBehaviour
@@ -15,17 +14,13 @@ public class TurnManager : MonoBehaviour
     private TeamController _enemyTeamController;
 
     [SerializeField]
-    [ReadOnly]
     private bool isPlayersTurn = true;
     [SerializeField]
-    [ReadOnly]
     private int _currentFighterIndex = 0;
 
     [SerializeField]
-    [ReadOnly]
     private TeamController activeTeam;
     [SerializeField]
-    [ReadOnly]
     private TeamController passiveTeam;
 
     public TeamController ActiveTeam => activeTeam;
@@ -36,8 +31,7 @@ public class TurnManager : MonoBehaviour
     {
         StartTurn();
     }
-
-    [Button]
+    
     void StartTurn()
     {
         SetTurnTeams();
@@ -54,14 +48,12 @@ public class TurnManager : MonoBehaviour
         }
     }
     
-    [Button]
     public void Skip()
     {
         _currentFighterIndex = 100;
         activeTeam.EndTurn();
     }
-
-    [Button]
+    
     public void EndTurn()
     {
         SetTurnTeams();

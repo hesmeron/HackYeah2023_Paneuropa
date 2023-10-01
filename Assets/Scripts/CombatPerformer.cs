@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,10 +17,8 @@ public class CombatPerformer : MonoBehaviour
     private DamageEffect[] _damageEffects = new DamageEffect[4];
 
     [SerializeField]
-    [ReadOnly]
     private TeamController _attacking;
     [SerializeField]
-    [ReadOnly]
     private TeamController _target;
 
     public void StartPerformance(TeamController attacking, TeamController target)

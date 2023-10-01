@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -72,7 +71,6 @@ public class Fighter : MonoBehaviour
 
     private int _currentHealth;
     [SerializeField]
-    [ReadOnly]
     private bool isKnockedOut = false;
 
     [SerializeField]
