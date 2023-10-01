@@ -822,7 +822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6245849969805675289, guid: 55d3159fc53b2f84aa3e0b17c31f28d3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.11
+      value: 7.46
       objectReference: {fileID: 0}
     - target: {fileID: 6245849969805675289, guid: 55d3159fc53b2f84aa3e0b17c31f28d3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1381,7 +1381,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7456581285276719815, guid: bc3d5fd86101dc045a66dfdaeba69010, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.2
+      value: 14.14
       objectReference: {fileID: 0}
     - target: {fileID: 7456581285276719815, guid: bc3d5fd86101dc045a66dfdaeba69010, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2270,9 +2270,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _figters:
-  - {fileID: 144758218}
   - {fileID: 1280198562}
   - {fileID: 427942227}
+  - {fileID: 144758218}
 --- !u!4 &1501686678 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6245849969805675289, guid: 55d3159fc53b2f84aa3e0b17c31f28d3, type: 3}
@@ -2474,8 +2474,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _figters:
-  - {fileID: 1501686679}
   - {fileID: 1703095218}
+  - {fileID: 1501686679}
   - {fileID: 784912411}
 --- !u!1 &1661568131
 GameObject:
@@ -3019,7 +3019,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6474256376350959005, guid: 0f1f49af2113eee4084aae97d3cee91e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.431232
+      value: 10.76
       objectReference: {fileID: 0}
     - target: {fileID: 6474256376350959005, guid: 0f1f49af2113eee4084aae97d3cee91e, type: 3}
       propertyPath: m_LocalPosition.y
