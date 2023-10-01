@@ -4,13 +4,16 @@ using UnityEngine;
 
 public  abstract  class TeamController : MonoBehaviour
 {
+    [SerializeField] private bool _isEnemy = false;
+    [SerializeField]
+    protected CameraManager _cameraManager;
     [SerializeField]
     private CombatPerformer _combatPerformer;
     [SerializeField]
     protected TurnManager _turnManager;
 
     [SerializeField] 
-    private List<Fighter> _fighters = new List<Fighter>();
+    protected List<Fighter> _fighters = new List<Fighter>();
 
     private int currentSelectedFighterIndex =  0;
     private Fighter _currentSelectedFighter;
@@ -22,24 +25,6 @@ public  abstract  class TeamController : MonoBehaviour
     public Fighter CurrentSelectedFighter => _currentSelectedFighter;
 
     public abstract void ExecuteTurn();
-
-    public void EvaluateTurn(DefenseType defenseType)
-    {
-        switch (defenseType)
-        {
-            case DefenseType.Weak:
-               OneMore();
-                break;
-            case DefenseType.Normal:
-                EndTurn();
-                break;
-            case DefenseType.Resist:
-                _turnManager.Skip();
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(defenseType), defenseType, null);
-        }
-    }
 
     public virtual void EndTurn()
     {
@@ -104,6 +89,10 @@ public  abstract  class TeamController : MonoBehaviour
             currentSelectedFighterIndex = index;
             _currentSelectedFighter = _fighters[index];
             _currentSelectedFighter.Select();
+            if (!_isEnemy)
+            {
+                _cameraManager.CloseUp(_currentSelectedFighter);
+            }
         }
     }
     public void SelectAndReady(int index)
@@ -134,17 +123,20 @@ public  abstract  class TeamController : MonoBehaviour
     {
         AttackType attackType = _currentSelectedFighter.SpecialAttackType;
 
-        switch (attackType)
+        if (attackType == AttackType.Guard)
         {
-            case AttackType.Guard:
-                foreach (var fighter in _fighters)
-                {
-                    fighter.Guaard();
-                }
-                _combatPerformer.PerformGuardForAll();
-                break;
+            foreach (var fighter in _fighters)
+            {
+                fighter.Guaard();
+            }
+            _combatPerformer.PerformGuardForAll();
+            _combatPerformer.PerformGuard();
         }
-        _combatPerformer.PerformGuard();
+        else
+        {
+            _combatPerformer.PerformSpecialAttack();
+        }
+
     }
     protected void PerformGuard()
     {

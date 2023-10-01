@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3654289663161796979}
   - component: {fileID: 3228131900909827896}
   - component: {fileID: 2803671630318523218}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MentalEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

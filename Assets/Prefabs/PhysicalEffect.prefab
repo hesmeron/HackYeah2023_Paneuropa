@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1258020233348884575}
   - component: {fileID: 1085199794943661588}
   - component: {fileID: 372501159356559998}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PhysicalEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

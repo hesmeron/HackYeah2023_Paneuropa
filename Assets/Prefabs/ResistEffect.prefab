@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7907456450845263618}
   - component: {fileID: 8342610949151324489}
   - component: {fileID: 8782842631578000675}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ResistEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -4,9 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerInput : TeamController
 {
     [SerializeField]
-    private RectTransform _attackChoice;  
-    [SerializeField]
-    private RectTransform _selectChoice;
+    private RectTransform _attackChoice;
     [SerializeField] 
     private Camera _camera;
 
@@ -60,7 +58,7 @@ public class PlayerInput : TeamController
     {
         _isChoosingSelf = true;
         _attackChoice.gameObject.SetActive(false);
-        _selectChoice.gameObject.SetActive(true);
+        _cameraManager.ChangeViewToPlayerChoice();
     }
 
     #region Callbacks
@@ -101,7 +99,7 @@ public class PlayerInput : TeamController
         {
             _isChoosingSelf = false;
             _attackChoice.gameObject.SetActive(true);
-            _selectChoice.gameObject.SetActive(false);
+            _cameraManager.ChangeViewToCenter();
             MoveUI();
         }
         else
@@ -120,8 +118,6 @@ public class PlayerInput : TeamController
     {
         if (_isChoosingSelf)
         {
-            Vector3 fighterPosition = CurrentSelectedFighter.transform.position;
-            _selectChoice.position = _camera.WorldToScreenPoint(fighterPosition);
         }
         else
         {

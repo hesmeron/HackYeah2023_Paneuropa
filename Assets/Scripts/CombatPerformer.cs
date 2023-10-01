@@ -6,7 +6,10 @@ using Random = UnityEngine.Random;
 
 public class CombatPerformer : MonoBehaviour
 {
-    [SerializeField] private float _effectVariation = 0.3f;
+    [SerializeField] 
+    private CameraManager _cameraManager;
+    [SerializeField]
+    private float _effectVariation = 0.3f;
     [SerializeField] 
     private TextSpawner _textSpawner;
     [SerializeField]
@@ -45,20 +48,35 @@ public class CombatPerformer : MonoBehaviour
     
     public void PerformSpecialAttack()
     {
-        Debug.Log("Perform physical attack");
         int baseDamage = _attacking.CurrentSelectedFighter.Special;
         AttackType attackType = _attacking.CurrentSelectedFighter.SpecialAttackType;
         DamageInfo info = _target.CurrentSelectedFighter.TakeDamage(baseDamage, attackType);
+        switch (attackType)
+        {
+            case AttackType.Entangelment:
+                _target.CurrentSelectedFighter.Entangle();
+                break;
+            case AttackType.Petrification:
+                _target.CurrentSelectedFighter.Petrify();
+                break;
+            case AttackType.Showdown:
+                _target.CurrentSelectedFighter.Showdown();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
         StartCoroutine(AnimateAttack(info));
     }
 
     public void PerformGuard()
     {
-        InstantiateEffect(_damageEffects[(int) DefenseType.Resist], _attacking.CurrentSelectedFighter.transform.position);
+        InstantiateEffect(_damageEffects[(int) DefenseType.Resist], _attacking.CurrentSelectedFighter.PartialCameraPosition.position);
         _turnManager.EndTurn();
     }    
+    
     public void PerformGuardForAll()
     {
+        _cameraManager.ChangeViewToPlayerChoice();
         foreach (var fighter in _attacking.Fighters)
         {
             InstantiateEffect(_damageEffects[(int) DefenseType.Resist], fighter.transform.position);
@@ -69,13 +87,14 @@ public class CombatPerformer : MonoBehaviour
     IEnumerator JustWait()
     {
         yield return new WaitForSeconds(2f);
+        _cameraManager.ChangeViewToCenter();
         _turnManager.EndTurn();
     }
     
     IEnumerator AnimateAttack(DamageInfo info)
     {
 
-        Vector3 targetPosition = _target.CurrentSelectedFighter.transform.position;
+        Vector3 targetPosition = _target.CurrentSelectedFighter.PartialCameraPosition.position;
         bool doNextTurn = false;
         int repetitions = Mathf.CeilToInt(info.DamageGiven / 25f);
         DamageEffect effect = _damageEffects[(int) info.DefenseType];
@@ -120,7 +139,8 @@ public class CombatPerformer : MonoBehaviour
     {
         float x = Random.Range(-_effectVariation, +_effectVariation);
         float y = Random.Range(-_effectVariation, +_effectVariation);
-        Instantiate(effect, targetPosition +  new Vector3(x,y,0), Quaternion.identity);
+        float z = -targetPosition.z;
+        Instantiate(effect, targetPosition +  new Vector3(x,y,z), Quaternion.identity);
 
     }
 

@@ -1,7 +1,15 @@
 using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
+[System.Serializable]
+public struct Move
+{
+    public AttackType AttackType;
+    public float Damage;
+}
 public enum AttackType{
     Physical,
     Mental,
@@ -28,7 +36,21 @@ public struct DamageInfo
 public class Fighter : MonoBehaviour
 {
     [SerializeField] 
-    private GameObject _selectionLaser;
+    private Transform _cameraPosition;    
+    [SerializeField] 
+    private Transform _partialCameraPosition;
+    [SerializeField]
+    private List<Move> moves = new List<Move>();
+    [SerializeField] 
+    private GameObject _selectionLaser;    
+    [SerializeField] 
+    private SpriteRenderer _renderer;
+    [SerializeField]
+    private Color _deadColor = Color.black;    
+    [SerializeField]
+    private Color _petrifiedColor = Color.gray;
+    [SerializeField] 
+    private SpriteRenderer _vines;
     [SerializeField] 
     private GameObject _knockoutEffect;
     [SerializeField]
@@ -51,8 +73,17 @@ public class Fighter : MonoBehaviour
     [ReadOnly]
     private bool isKnockedOut = false;
 
+    [SerializeField]
     private bool _isGuarding = false;
-    
+    [SerializeField]
+    private bool _isEntangled = false;
+    [SerializeField]
+    private bool _isPetrified= false;
+
+    public Transform CameraPosition => _cameraPosition;
+
+    public Transform PartialCameraPosition => _partialCameraPosition;
+
     public int Physical => _physical;
 
     public int Taunt => _taunt;
@@ -72,6 +103,10 @@ public class Fighter : MonoBehaviour
         {
             isKnockedOut = false;
             _isGuarding = false;
+            _isEntangled = false;
+            SetVinesColor(0f);
+            _isPetrified = false;
+            _renderer.color = Color.white;
             _teamController.RemoveKnockout();
             _knockoutEffect.SetActive(false);
         }
@@ -94,6 +129,15 @@ public class Fighter : MonoBehaviour
         if (defenseType == DefenseType.Weak && _isGuarding)
         {
             defenseType = DefenseType.Normal;
+        }
+
+        if (attackType == AttackType.Mental && _isEntangled)
+        {
+            return DefenseType.Weak;
+        }       
+        if (attackType == AttackType.Physical && _isPetrified)
+        {
+            return DefenseType.Weak;
         }
         return defenseType;
     }
@@ -139,10 +183,39 @@ public class Fighter : MonoBehaviour
     {
         _isGuarding = true;
     }
+    public void Entangle()
+    {
+        _isEntangled = true;
+        SetVinesColor(1f);
 
+    }
+    public void Petrify()
+    {
+        _isPetrified = true;
+        _renderer.color = _petrifiedColor;
+    }   
+    
+    public void Showdown()
+    {
+        _isGuarding = false;
+    }
+
+    public Move RandomMove()
+    {
+        return moves[Random.Range(0, moves.Count)];
+    }
+
+    private void SetVinesColor(float alpha)
+    {
+        Color color = _vines.color;
+        color.a = alpha;
+        _vines.color = color;
+    }
+    
     private void Die()
     {
         _teamController.RemoveFighter(this);
+        _renderer.color = _deadColor;
     }
 
     float HealthPercentage()

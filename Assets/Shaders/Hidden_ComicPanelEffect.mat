@@ -31,7 +31,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Offset: 0.92
-    - _SlideIn: 1
+    - _SlideIn: 0
     - _XCoefficient: 5
     - _YCoefficient: 1
     - _xCoefficient: 14.49
