@@ -30,6 +30,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _LineDistance: 0.1
     - _Offset: 0.92
     - _SlideIn: 0
     - _XCoefficient: 5

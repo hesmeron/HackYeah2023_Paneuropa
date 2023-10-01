@@ -6,6 +6,7 @@ Shader "Hidden/ComicPanelEffect"
         _PortraitTex ("Portrait Texture", 2D) = "black" {}
         _XCoefficient ("xCoefficient", float) = 1
         _Offset ("Offset", float) = 0.5
+        _LineDistance("LineDistance", float) = 0.05
         _SlideIn ("SlideIn", Range(0,1)) = 0.5
     }
     SubShader
@@ -46,6 +47,7 @@ Shader "Hidden/ComicPanelEffect"
             half _XCoefficient;
             half _Offset;
             half _SlideIn;
+            half _LineDistance;
 
             fixed4 frag (v2f i) : SV_Target
             {
@@ -57,6 +59,11 @@ Shader "Hidden/ComicPanelEffect"
 
                 if(x < y)
                 {
+                    half clossenes = abs(x-y);
+                    if(clossenes < _LineDistance)
+                    {
+                        return float4(0,0,0,1);
+                    }
                     fixed4 portrait = tex2D(_PortraitTex, i.uv + float2( slideIn, 0));
                     return portrait;
                 }
