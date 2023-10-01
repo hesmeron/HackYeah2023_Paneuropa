@@ -93,6 +93,10 @@ public  abstract  class TeamController : MonoBehaviour
             {
                 _cameraManager.CloseUp(_currentSelectedFighter);
             }
+            else
+            {
+                _cameraManager.CloseUpEnemy(_currentSelectedFighter);
+            }
         }
     }
     public void SelectAndReady(int index)

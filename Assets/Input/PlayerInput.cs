@@ -29,6 +29,7 @@ public class PlayerInput : TeamController
         _playerControls.Controller.SpecialAttack.performed += SpecialAttackOnperformed;
         _playerControls.Controller.Guard.performed += GuardOnperformed;
         _attackChoice.gameObject.SetActive(true);
+        _cameraManager.ChangeViewToEnemyChoice();
         MoveUI();
     }
 
@@ -99,7 +100,7 @@ public class PlayerInput : TeamController
         {
             _isChoosingSelf = false;
             _attackChoice.gameObject.SetActive(true);
-            _cameraManager.ChangeViewToCenter();
+            _cameraManager.ChangeViewToEnemyChoice();
             MoveUI();
         }
         else

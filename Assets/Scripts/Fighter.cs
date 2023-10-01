@@ -36,7 +36,9 @@ public struct DamageInfo
 public class Fighter : MonoBehaviour
 {
     [SerializeField] 
-    private Transform _cameraPosition;    
+    private Transform _cameraPosition;       
+    [SerializeField] 
+    private Transform _effectPosition;    
     [SerializeField] 
     private Transform _partialCameraPosition;
     [SerializeField]
@@ -81,6 +83,8 @@ public class Fighter : MonoBehaviour
     private bool _isPetrified= false;
 
     public Transform CameraPosition => _cameraPosition;
+
+    public Transform EffectPosition => _effectPosition;
 
     public Transform PartialCameraPosition => _partialCameraPosition;
 

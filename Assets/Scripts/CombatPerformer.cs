@@ -93,16 +93,20 @@ public class CombatPerformer : MonoBehaviour
     
     IEnumerator AnimateAttack(DamageInfo info)
     {
-
-        Vector3 targetPosition = _target.CurrentSelectedFighter.PartialCameraPosition.position;
+        Vector3 targetPosition = _target.CurrentSelectedFighter.EffectPosition.position;
         bool doNextTurn = false;
         int repetitions = Mathf.CeilToInt(info.DamageGiven / 25f);
+        repetitions *= 2;
         DamageEffect effect = _damageEffects[(int) info.DefenseType];
+        _cameraManager.SetBothToFull();
+        yield return 1f;
         for (int i = 0; i < repetitions; i++)
         {
             InstantiateEffect(effect, targetPosition);
             yield return new WaitForSeconds(0.3f);
         }
+
+        yield return 1f;
         switch (info.DefenseType)
         {
 

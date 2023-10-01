@@ -10,11 +10,10 @@ public class TextSpawner : MonoBehaviour
     [SerializeField] 
     private Camera main;
 
-    public void ShowText(string text, Vector3 position)
+    public void ShowText(string text, Vector3 position) 
     {
-        Vector3 screenPosition = main.WorldToScreenPoint(position);
         DamageText instance = Instantiate(_damageTextPrefab, transform);
-        instance.transform.position = screenPosition;
+        instance.transform.position = new Vector3(position.x ,position.y ,-5);
         instance.SetText(text);
     }
 
