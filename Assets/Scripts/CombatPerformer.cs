@@ -56,8 +56,22 @@ public class CombatPerformer : MonoBehaviour
     {
         InstantiateEffect(_damageEffects[(int) DefenseType.Resist], _attacking.CurrentSelectedFighter.transform.position);
         _turnManager.EndTurn();
+    }    
+    public void PerformGuardForAll()
+    {
+        foreach (var fighter in _attacking.Fighters)
+        {
+            InstantiateEffect(_damageEffects[(int) DefenseType.Resist], fighter.transform.position);
+            StartCoroutine(JustWait());
+        }
     }
 
+    IEnumerator JustWait()
+    {
+        yield return new WaitForSeconds(2f);
+        _turnManager.EndTurn();
+    }
+    
     IEnumerator AnimateAttack(DamageInfo info)
     {
 

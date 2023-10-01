@@ -45,11 +45,13 @@ public class Fighter : MonoBehaviour
     private TeamController _teamController;
     [SerializeField]
     private int _maxHealth = 100;
-    
+
     private int _currentHealth;
     [SerializeField]
     [ReadOnly]
     private bool isKnockedOut = false;
+
+    private bool _isGuarding = false;
     
     public int Physical => _physical;
 
@@ -69,6 +71,7 @@ public class Fighter : MonoBehaviour
         if (isKnockedOut)
         {
             isKnockedOut = false;
+            _isGuarding = false;
             _teamController.RemoveKnockout();
             _knockoutEffect.SetActive(false);
         }
@@ -87,7 +90,12 @@ public class Fighter : MonoBehaviour
 
     public DefenseType GetDefenseType(AttackType attackType)
     {
-        return _defenseTypes[(int) attackType];
+        DefenseType defenseType = _defenseTypes[(int) attackType];
+        if (defenseType == DefenseType.Weak && _isGuarding)
+        {
+            defenseType = DefenseType.Normal;
+        }
+        return defenseType;
     }
 
     public DamageInfo TakeDamage(int damage, AttackType attackType = AttackType.Physical)
@@ -95,6 +103,10 @@ public class Fighter : MonoBehaviour
         DamageInfo damageInfo = new DamageInfo();
         damageInfo.WasKnockedOutBefore = isKnockedOut;
 
+        if (_isGuarding)
+        {
+            damage /= 2;
+        }
         DefenseType defenseType = GetDefenseType(attackType);
         switch (defenseType)
         {
@@ -121,6 +133,11 @@ public class Fighter : MonoBehaviour
         }
 
         return damageInfo;
+    }
+
+    public void Guaard()
+    {
+        _isGuarding = true;
     }
 
     private void Die()

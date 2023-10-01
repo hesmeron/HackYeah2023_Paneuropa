@@ -14,6 +14,9 @@ public  abstract  class TeamController : MonoBehaviour
 
     private int currentSelectedFighterIndex =  0;
     private Fighter _currentSelectedFighter;
+
+    public List<Fighter> Fighters => _fighters;
+
     private int _kncokedOutCount = 0;
 
     public Fighter CurrentSelectedFighter => _currentSelectedFighter;
@@ -129,10 +132,23 @@ public  abstract  class TeamController : MonoBehaviour
     }   
     protected void PerformSpecial()
     {
-        _combatPerformer.PerformSpecialAttack();
+        AttackType attackType = _currentSelectedFighter.SpecialAttackType;
+
+        switch (attackType)
+        {
+            case AttackType.Guard:
+                foreach (var fighter in _fighters)
+                {
+                    fighter.Guaard();
+                }
+                _combatPerformer.PerformGuardForAll();
+                break;
+        }
+        _combatPerformer.PerformGuard();
     }
     protected void PerformGuard()
     {
+        _currentSelectedFighter.Guaard();
         _combatPerformer.PerformGuard();
     }
 
