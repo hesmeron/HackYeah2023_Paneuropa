@@ -5,6 +5,8 @@ using UnityEngine;
 public  abstract  class TeamController : MonoBehaviour
 {
     [SerializeField]
+    private CombatPerformer _combatPerformer;
+    [SerializeField]
     protected TurnManager _turnManager;
 
     [SerializeField] 
@@ -119,18 +121,19 @@ public  abstract  class TeamController : MonoBehaviour
 
     protected void PerformPhysicalAttack()
     {
-        DefenseType defenseType = _turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Physical);
-        EvaluateTurn(defenseType);
+        _combatPerformer.PerformPhysicalAttack();
     }    
     protected void PerformTaunt()
     {
-        DefenseType defenseType =_turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Taunt, AttackType.Mental);
-        EvaluateTurn(defenseType);
+        _combatPerformer.PerformTaunt();
     }   
     protected void PerformSpecial()
     {
-        DefenseType defenseType =_turnManager.PassiveTeam.CurrentSelectedFighter.TakeDamage(CurrentSelectedFighter.Special, CurrentSelectedFighter.SpecialAttackType);
-        EvaluateTurn(defenseType);
+        _combatPerformer.PerformSpecialAttack();
+    }
+    protected void PerformGuard()
+    {
+        _combatPerformer.PerformGuard();
     }
 
 

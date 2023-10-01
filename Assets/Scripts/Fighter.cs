@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public enum AttackType{
@@ -6,19 +7,30 @@ public enum AttackType{
     Mental,
     Entangelment,
     Petrification,
+    Showdown,
+    Guard
 }
 
 public enum DefenseType
 {
     Weak,
     Normal, 
-    Resist
+    Resist,
+}
+
+public struct DamageInfo
+{
+    public DefenseType DefenseType;
+    public int DamageGiven;
+    public bool WasKnockedOutBefore;
 }
 
 public class Fighter : MonoBehaviour
 {
     [SerializeField] 
-    private TextSpawner _textSpawner;
+    private GameObject _selectionLaser;
+    [SerializeField] 
+    private GameObject _knockoutEffect;
     [SerializeField]
     private int _physical;    
     [SerializeField] 
@@ -27,15 +39,16 @@ public class Fighter : MonoBehaviour
     private int _special;    
     [SerializeField] 
     private AttackType _specialAttackType;
-
     [SerializeField]
     private DefenseType[] _defenseTypes = new DefenseType[4];
-
     [SerializeField] 
     private TeamController _teamController;
     [SerializeField]
     private int _maxHealth = 100;
+    
     private int _currentHealth;
+    [SerializeField]
+    [ReadOnly]
     private bool isKnockedOut = false;
     
     public int Physical => _physical;
@@ -57,58 +70,57 @@ public class Fighter : MonoBehaviour
         {
             isKnockedOut = false;
             _teamController.RemoveKnockout();
+            _knockoutEffect.SetActive(false);
         }
     }
 
     public void Select()
     {
-        transform.localScale = new Vector3(HealthPercentage(),1f,1) *2f;
+        transform.localScale = new Vector3(Mathf.Sign(transform.localScale.x),1f,1) *1.1f;
+        _selectionLaser.gameObject.SetActive(true);
     }   
     public void Deselect()
     {
-        transform.localScale = new Vector3(HealthPercentage(),1f,1);
+        transform.localScale = new Vector3(transform.localScale.x,1f,1);
+        _selectionLaser.gameObject.SetActive(false);
     }
 
-    public DefenseType TakeDamage(int damage, AttackType attackType = AttackType.Physical)
+    public DefenseType GetDefenseType(AttackType attackType)
     {
-        Debug.Log("Receive damage" + damage+ " " + attackType);
-        DefenseType defenseType = _defenseTypes[(int) attackType];
+        return _defenseTypes[(int) attackType];
+    }
+
+    public DamageInfo TakeDamage(int damage, AttackType attackType = AttackType.Physical)
+    {
+        DamageInfo damageInfo = new DamageInfo();
+        damageInfo.WasKnockedOutBefore = isKnockedOut;
+
+        DefenseType defenseType = GetDefenseType(attackType);
         switch (defenseType)
         {
             case DefenseType.Weak:
                 damage *= 2;
-                string message = "Weak!";
-                if (isKnockedOut)
-                {
-                    message = "Already down...";
-                }
-                else
-                {
-                    _teamController.AddKnockout();
-                }
-
                 isKnockedOut = true;
-                _textSpawner.ShowText(message, transform.position + (Vector3.up/2f));
-
+                _knockoutEffect.SetActive(true);
                 break;
             case DefenseType.Normal:
                 break;
             case DefenseType.Resist:
-                _textSpawner.ShowText("Resist", transform.position + (Vector3.up/2f));
                 damage = 0;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        _textSpawner.ShowText(damage.ToString(), transform.position);
+
+        damageInfo.DamageGiven= damage;
+        damageInfo.DefenseType = defenseType;
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {
             Die();
-            return DefenseType.Normal;
         }
 
-        return defenseType;
+        return damageInfo;
     }
 
     private void Die()

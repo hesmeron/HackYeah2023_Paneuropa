@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
+    [SerializeField]
+    private CombatPerformer _combatPerformer;
     [SerializeField] 
     private GameObject _vicotryPanel;
     [SerializeField] 
@@ -17,9 +19,7 @@ public class TurnManager : MonoBehaviour
     private bool isPlayersTurn = true;
     [SerializeField]
     [ReadOnly]
-    private int currentFighterIndex = 0;
-    private int currentTargetrIndex = 0;
-    private Fighter _currentFighter;
+    private int _currentFighterIndex = 0;
 
     [SerializeField]
     [ReadOnly]
@@ -41,8 +41,9 @@ public class TurnManager : MonoBehaviour
     void StartTurn()
     {
         SetTurnTeams();
-        activeTeam.SelectAndReady(currentFighterIndex);
-        passiveTeam.Select(currentTargetrIndex);
+        _combatPerformer.StartPerformance(activeTeam, passiveTeam);
+        activeTeam.SelectAndReady(_currentFighterIndex);
+        passiveTeam.Select(0);
         if (isPlayersTurn)
         {
             _playerInput.ExecuteTurn();
@@ -56,7 +57,7 @@ public class TurnManager : MonoBehaviour
     [Button]
     public void Skip()
     {
-        currentFighterIndex = 100;
+        _currentFighterIndex = 100;
         activeTeam.EndTurn();
     }
 
@@ -64,12 +65,11 @@ public class TurnManager : MonoBehaviour
     public void EndTurn()
     {
         SetTurnTeams();
-        currentFighterIndex++;
-        if (currentFighterIndex >= activeTeam.FighterCount())
+        _currentFighterIndex++;
+        if (_currentFighterIndex >= activeTeam.FighterCount())
         {
             isPlayersTurn = !isPlayersTurn;
-            currentTargetrIndex = 0;
-            currentFighterIndex = 0;
+            _currentFighterIndex = 0;
         }
         StartTurn();
     }

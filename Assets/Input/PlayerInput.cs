@@ -29,8 +29,14 @@ public class PlayerInput : TeamController
         _playerControls.Controller.PreviousSelection.performed += PreviousSelectionOnperformed;
         _playerControls.Controller.GaugeRefill.performed += GaugeRefillOnperformed;
         _playerControls.Controller.SpecialAttack.performed += SpecialAttackOnperformed;
+        _playerControls.Controller.Guard.performed += GuardOnperformed;
         _attackChoice.gameObject.SetActive(true);
         MoveUI();
+    }
+
+    private void GuardOnperformed(InputAction.CallbackContext obj)
+    {
+        PerformGuard();
     }
 
     protected override void OnRunOutOfFighters()
@@ -43,6 +49,9 @@ public class PlayerInput : TeamController
         _playerControls.Controller.StandardAttack.performed -= StandardAttackOnperformed;
         _playerControls.Controller.NextSelection.performed -= NextSelectionOnperformed;
         _playerControls.Controller.PreviousSelection.performed -= PreviousSelectionOnperformed;
+        _playerControls.Controller.GaugeRefill.performed -= GaugeRefillOnperformed;
+        _playerControls.Controller.SpecialAttack.performed -= SpecialAttackOnperformed;
+        _playerControls.Controller.Guard.performed -= GuardOnperformed;
         _attackChoice.gameObject.SetActive(false);
         base.EndTurn();
     }
