@@ -73,16 +73,17 @@ public class CombatPerformer : MonoBehaviour
     
     public void PerformGuardForAll()
     {
+        StartCoroutine(GuardCoroutine());
+    }
+
+    IEnumerator GuardCoroutine()
+    {
         _cameraManager.ChangeViewToPlayerChoice();
         foreach (var fighter in _attacking.Fighters)
         {
             InstantiateEffect(_damageEffects[(int) DefenseType.Resist], fighter.transform.position);
-            StartCoroutine(JustWait());
+            yield return new WaitForSeconds(1f);
         }
-    }
-
-    IEnumerator JustWait()
-    {
         yield return new WaitForSeconds(2f);
         _cameraManager.ChangeViewToCenter();
         _turnManager.EndTurn();

@@ -9,11 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1624858455370548217, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.42
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 1624858455370548217, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.387
+      value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: 1990566362289752214, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
       propertyPath: _physical
@@ -79,17 +79,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Meathead Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2702562195373717798, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b9ea3c4d2ae38f04fbb93d804ce107f2, type: 3}
     - target: {fileID: 2702562195373717799, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3765724058342876773, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 4503445154760410815, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.42
+      value: 0.069999814
       objectReference: {fileID: 0}
     - target: {fileID: 4503445154760410815, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.387
+      value: 1.28
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b22e66820fc7ef04595c5048f98ade33, type: 3}

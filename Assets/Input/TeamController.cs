@@ -134,7 +134,6 @@ public  abstract  class TeamController : MonoBehaviour
                 fighter.Guaard();
             }
             _combatPerformer.PerformGuardForAll();
-            _combatPerformer.PerformGuard();
         }
         else
         {

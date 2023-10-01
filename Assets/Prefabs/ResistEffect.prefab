@@ -191,5 +191,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _flightDuration: 0.6
+  _flightDuration: 2.5
   _speed: 0.1

@@ -25,12 +25,17 @@ public class PlayerInput : TeamController
         _playerControls.Controller.StandardAttack.performed += StandardAttackOnperformed;
         _playerControls.Controller.NextSelection.performed += NextSelectionOnperformed;
         _playerControls.Controller.PreviousSelection.performed += PreviousSelectionOnperformed;
-        _playerControls.Controller.GaugeRefill.performed += GaugeRefillOnperformed;
-        _playerControls.Controller.SpecialAttack.performed += SpecialAttackOnperformed;
-        _playerControls.Controller.Guard.performed += GuardOnperformed;
+        Bind();
         _attackChoice.gameObject.SetActive(true);
         _cameraManager.ChangeViewToEnemyChoice();
         MoveUI();
+    }
+
+    private void Bind()
+    {
+        _playerControls.Controller.GaugeRefill.performed += GaugeRefillOnperformed;
+        _playerControls.Controller.SpecialAttack.performed += SpecialAttackOnperformed;
+        _playerControls.Controller.Guard.performed += GuardOnperformed;
     }
 
     private void GuardOnperformed(InputAction.CallbackContext obj)
@@ -48,11 +53,16 @@ public class PlayerInput : TeamController
         _playerControls.Controller.StandardAttack.performed -= StandardAttackOnperformed;
         _playerControls.Controller.NextSelection.performed -= NextSelectionOnperformed;
         _playerControls.Controller.PreviousSelection.performed -= PreviousSelectionOnperformed;
+        Unbind();
+        _attackChoice.gameObject.SetActive(false);
+        base.EndTurn();
+    }
+
+    private void Unbind()
+    {
         _playerControls.Controller.GaugeRefill.performed -= GaugeRefillOnperformed;
         _playerControls.Controller.SpecialAttack.performed -= SpecialAttackOnperformed;
         _playerControls.Controller.Guard.performed -= GuardOnperformed;
-        _attackChoice.gameObject.SetActive(false);
-        base.EndTurn();
     }
 
     public override void OneMore()
@@ -60,12 +70,14 @@ public class PlayerInput : TeamController
         _isChoosingSelf = true;
         _attackChoice.gameObject.SetActive(false);
         _cameraManager.ChangeViewToPlayerChoice();
+        
     }
 
     #region Callbacks
     
     private void SpecialAttackOnperformed(InputAction.CallbackContext obj)
     {
+        Unbind();
         PerformSpecial();
     }
     private void PreviousSelectionOnperformed(InputAction.CallbackContext obj)
@@ -101,16 +113,19 @@ public class PlayerInput : TeamController
             _isChoosingSelf = false;
             _attackChoice.gameObject.SetActive(true);
             _cameraManager.ChangeViewToEnemyChoice();
+            Bind();
             MoveUI();
         }
         else
         {
+            Unbind();
             PerformPhysicalAttack();
         }
 
     }
     private void GaugeRefillOnperformed(InputAction.CallbackContext obj)
     {
+        Unbind();
         PerformTaunt();
     }
 #endregion

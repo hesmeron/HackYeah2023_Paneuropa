@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -118,11 +119,13 @@ public class Fighter : MonoBehaviour
     {
         transform.localScale = new Vector3(Mathf.Sign(transform.localScale.x),1f,1) *1.1f;
         _selectionLaser.gameObject.SetActive(true);
+        _selectionLaser.transform.localScale = new Vector3(0,2,2);
+        _selectionLaser.transform.DOScaleX(1f, 0.5f);
     }   
     public void Deselect()
     {
         transform.localScale = new Vector3(transform.localScale.x,1f,1);
-        _selectionLaser.gameObject.SetActive(false);
+        _selectionLaser.transform.DOScaleX(0f,  0.5f);
     }
 
     public DefenseType GetDefenseType(AttackType attackType)
